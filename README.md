@@ -11,13 +11,13 @@
 
 ##  Scenario
 
-Management suspects that some employees may be using TOR browsers to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks. If any use of TOR is found, notify management.
+Management suspects that employees may be using the TOR browser to circumvent network security controls due to recent network logs showing abnormal encrypted traffic and connections to known TOR entry nodes. Additionally, anonymous reports indicate employees discussing methods to access restricted sites during work hours. The objective is to identify any TOR activity, investigate related security incidents, and mitigate potential risks. If TOR usage is detected, management must be informed.
 
 ### High-Level TOR-Related IoC Discovery Plan
 
-- **Check `DeviceFileEvents`** for any `tor(.exe)` or `firefox(.exe)` file events.
-- **Check `DeviceProcessEvents`** for any signs of installation or usage.
-- **Check `DeviceNetworkEvents`** for any signs of outgoing connections over known TOR ports.
+- **Check `DeviceFileEvents`** for any `tor(.exe)`, `firefox(.exe)`, `browser(.exe)`, `tor-browser(.exe)` or `tor-browser64(.exe)` file events.
+- **Check `DeviceProcessEvents`** for any indications of installation or activity..
+- **Check `DeviceNetworkEvents`** for any indications of outbound connections on known TOR ports..
 
 ---
 
@@ -25,37 +25,37 @@ Management suspects that some employees may be using TOR browsers to bypass netw
 
 ### 1. Searched the `DeviceFileEvents` Table
 
-Searched for any file that had the string "tor" in it and discovered what looks like the user "employee" downloaded a TOR installer, did something that resulted in many TOR-related files being copied to the desktop, and the creation of a file called `tor-shopping-list.txt` on the desktop at `2024-11-08T22:27:19.7259964Z`. These events began at `2024-11-08T22:14:48.6065231Z`.
+Performed a search for files containing the string "tor" and found evidence that the user "employee" downloaded a TOR installer. Further activity resulted in multiple TOR-related files being copied to the desktop, along with the creation of a file named `tor-shopping-list.txt`. These events started at `2025-02-28T19:18:52.1552148Z`.
 
 **Query used to locate events:**
 
 ```kql
-DeviceFileEvents  
-| where DeviceName == "threat-hunt-lab"  
-| where InitiatingProcessAccountName == "employee"  
-| where FileName contains "tor"  
-| where Timestamp >= datetime(2024-11-08T22:14:48.6065231Z)  
-| order by Timestamp desc  
+DeviceFileEvents
+| where DeviceName == "ge-threat-hunt-"
+| where InitiatingProcessAccountName  == "employee"
+| where FileName contains "tor"
+| where Timestamp >= datetime(2025-02-28T19:18:52.1552148Z)
+| order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 ```
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/71402e84-8767-44f8-908c-1805be31122d">
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/cfa2dfd7-e655-4939-a4f4-67b645aa51c3">
 
 ---
 
 ### 2. Searched the `DeviceProcessEvents` Table
 
-Searched for any `ProcessCommandLine` that contained the string "tor-browser-windows-x86_64-portable-14.0.1.exe". Based on the logs returned, at `2024-11-08T22:16:47.4484567Z`, an employee on the "threat-hunt-lab" device ran the file `tor-browser-windows-x86_64-portable-14.0.1.exe` from their Downloads folder, using a command that triggered a silent installation.
+Searched for any `ProcessCommandLine` entries containing the string "tor-browser-windows" According to the logs, at `2025-02-28T19:20:32.3678972Z`, an employee on the "ge-threat-hunt-" device executed `tor-browser-windows-x86_64-portable-14.0.1.exe` from their Downloads folder using a command that initiated a silent installation.
 
 **Query used to locate event:**
 
 ```kql
 
-DeviceProcessEvents  
-| where DeviceName == "threat-hunt-lab"  
-| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe"  
+DeviceProcessEvents
+| where DeviceName == "ge-threat-hunt-"
+| where ProcessCommandLine contains "tor-browser-windows"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 ```
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/b07ac4b4-9cb3-4834-8fac-9f5f29709d78">
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/485b1b83-8a8d-4c8a-8ff3-3ab8a45d3a71">
 
 ---
 
