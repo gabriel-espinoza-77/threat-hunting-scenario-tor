@@ -1,18 +1,18 @@
 # Threat Event (Unauthorized TOR Usage)
-**Unauthorized TOR Browser Installation and Use**
+**Unauthorized TOR Browser Installation and Activity**
 
-## Steps the "Bad Actor" took Create Logs and IoCs:
-1. Download the TOR browser installer: https://www.torproject.org/download/
-2. Install it silently: ```tor-browser-windows-x86_64-portable-14.0.1.exe /S```
-3. Opens the TOR browser from the folder on the desktop
-4. Connect to TOR and browse a few sites. For example:
-   - **WARNING: The links to onion sites change a lot and these have changed. However if you connect to Tor and browse around normal sites a bit, the necessary logs should still be created:**
+## Steps taken by the "Bad Actor" to Create Logs and IoCs:
+1. Download the TOR browser installer from [TorProject](https://www.torproject.org/download/)
+2. Perform a silent installation: ```tor-browser-windows-x86_64-portable-14.0.1.exe /S```
+3. Launch the TOR browser from the desktop folder.
+4. Connect to the TOR network and browse various websites:
+   - **WARNING: Onion site URLs frequently change. However, visiting standard websites through TOR should still generate relevant logs:**
    - Current Dread Forum: ```dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion```
    - Dark Markets Forum: ```dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/d/DarkNetMarkets```
    - Current Elysium Market: ```elysiumutkwscnmdohj23gkcyp3ebrf4iio3sngc5tvcgyfp4nqqmwad.top/login```
 
-6. Create a folder on your desktop called ```tor-shopping-list.txt``` and put a few fake (illicit) items in there
-7. Delete the file.
+6. Create a file named ```tor-shopping-list.txt``` on the desktop and list several fake illicit items.
+7. Delete the file to simulate data removal.
 
 ---
 
