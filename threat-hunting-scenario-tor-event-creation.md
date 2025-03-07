@@ -3,7 +3,7 @@
 
 ## Steps taken by the "Bad Actor" to Create Logs and IoCs:
 1. Download the TOR browser installer from [TorProject](https://www.torproject.org/download/)
-2. Perform a silent installation: ```tor-browser-windows-x86_64-portable-14.0.1.exe /S```
+2. Perform a silent installation: ```tor-browser-windows-x86_64-portable-14.0.6.exe /S```
 3. Launch the TOR browser from the desktop folder.
 4. Connect to the TOR network and browse various websites:
    - **WARNING: Onion site URLs frequently change. However, visiting standard websites through TOR should still generate relevant logs:**
@@ -46,7 +46,7 @@ DeviceFileEvents
 
 // TOR Browser being silently installed
 DeviceProcessEvents
-| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe  /S"
+| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.6.exe /S"
 | project Timestamp, DeviceName, ActionType, FileName, ProcessCommandLine
 
 // TOR Browser or service was successfully installed and is present on the disk
@@ -71,26 +71,9 @@ DeviceFileEvents
 | where FileName contains "shopping-list.txt"
 ```
 
----
-
 ## Created By:
 - **Author Name**: Gabriel Espinoza
 - **Author Contact**: www.linkedin.com/in/gabriel-espinoza10305070
 - **Date**: March 5, 2025
 
-## Validated By:
-- **Reviewer Name**: 
-- **Reviewer Contact**: 
-- **Validation Date**: 
-
 ---
-
-## Additional Notes:
-- **None**
-
----
-
-## Revision History:
-| **Version** | **Changes**                   | **Date**         | **Modified By**   |
-|-------------|-------------------------------|------------------|-------------------|
-| 1.0         | Initial draft                  | `February  28, 2025`  | `Gabriel Espinoza`   
